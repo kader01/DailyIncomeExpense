@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using DailyIncomeExp.DataManager;
 using DailyIncomeExp.Models;
 using DailyIncomeExp.Models.ViewModel;
@@ -55,7 +56,9 @@ namespace DailyIncomeExp.Controllers
             CompanyModel data=LogInManager.ValidateLogin(login);
             if (data !=null)
             {
-                return RedirectToAction("Index", "Home");
+                //Session["Company"] = data;
+                FormsAuthentication.SetAuthCookie(data.CompanyName,false);
+                return RedirectToAction("Index", "User");
             }
             else
             {
